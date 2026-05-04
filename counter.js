@@ -1,0 +1,29 @@
+const { createStore } = require("redux");
+
+const initialState = { count: 0 };
+
+function counterReducer(state = initialState, action) {
+  switch (action.type) {
+    case "INCREMENT":
+      return { ...state, count: state.count + 1 };
+
+    case "DECREMENT":
+      return { ...state, count: state.count - 1 };
+
+    case "INCREMENT_BY":
+      return { ...state, count: state.count + action.payload };
+
+    default:
+      return state;
+  }
+}
+
+const store = createStore(counterReducer);
+
+store.subscribe(() => {
+  console.log("State:", store.getState());
+});
+
+store.dispatch({ type: "INCREMENT" });
+store.dispatch({ type: "INCREMENT_BY", payload: 10 });
+store.dispatch({ type: "DECREMENT" });
